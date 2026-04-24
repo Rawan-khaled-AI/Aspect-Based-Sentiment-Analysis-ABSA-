@@ -247,5 +247,22 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
+## Evaluation
+
+The models were evaluated on a validation set.
+
+### Aspect Detection (Multi-label Classification)
+
+- Micro F1 Score: ~0.85  
+- Macro F1 Score: ~0.77  
+- Precision: ~0.89  
+- Recall: ~0.81  
+
+### Aspect Sentiment Classification
+
+- Accuracy: ~0.90  
+- Macro F1 Score: ~0.76  
+- Precision: ~0.93  
+- Recall: ~0.71  
 
 ---
