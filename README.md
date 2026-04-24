@@ -1,4 +1,3 @@
-تمام 👌 خديه Copy/Paste مباشرة:
 
 ````md
 # Aspect-Based Sentiment Analysis (ABSA)
