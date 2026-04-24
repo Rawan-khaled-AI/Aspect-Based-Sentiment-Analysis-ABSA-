@@ -1,12 +1,10 @@
-
-````md
 # Aspect-Based Sentiment Analysis (ABSA)
 
-This project was developed for the DeepX Hackathon.  
-The goal is to analyze Arabic customer reviews and extract:
+This project was developed for the DeepX Hackathon.
 
-1. The aspects mentioned in each review  
-2. The sentiment for each aspect  
+The goal is to analyze Arabic customer reviews and extract:
+1. The aspects mentioned in each review
+2. The sentiment for each aspect
 
 The final output is a JSON file following the required submission format.
 
@@ -43,7 +41,7 @@ Example:
     "food": "negative"
   }
 }
-````
+```
 
 ---
 
@@ -52,10 +50,18 @@ Example:
 ```text
 DeepX_Hackathon_neurix/
 │
+├── app/
+│   └── streamlit_app.py
+│
+├── assets/
+│   ├── absa-demo.png
+│   └── demo-1.png
+│
 ├── notebooks/
 │   └── 01_data_exploration.ipynb
 │
 ├── src/
+│   ├── prepare_data.py
 │   ├── train_aspect_model.py
 │   ├── train_sentiment_model.py
 │   └── predict.py
@@ -72,15 +78,15 @@ DeepX_Hackathon_neurix/
 
 ## Approach
 
-The solution is a two-stage pipeline:
+The solution is a two-stage pipeline.
 
 ### 1. Aspect Detection
 
-A multi-label classifier that detects all aspects in a review.
+A multi-label classifier detects all aspects mentioned in a review.
 
 ### 2. Aspect Sentiment Classification
 
-A second model that predicts sentiment for each detected aspect.
+A second model predicts the sentiment for each detected aspect.
 
 Input:
 
@@ -98,7 +104,7 @@ The models are based on:
 UBC-NLP/MARBERTv2
 ```
 
-It works well with informal Arabic and mixed-language text.
+MARBERTv2 was selected because the reviews include informal Arabic, mixed language, and real customer expressions.
 
 ---
 
@@ -106,44 +112,102 @@ It works well with informal Arabic and mixed-language text.
 
 The preprocessing includes:
 
-* Cleaning text (removing symbols and emojis)
-* Arabic normalization
-* Reducing repeated characters
-* Keeping meaningful Arabic and English words
-* Preparing multi-label targets for aspects
-* Building a dataset for aspect-level sentiment
+- Cleaning text by removing unnecessary symbols and emojis
+- Arabic normalization
+- Reducing repeated characters
+- Keeping meaningful Arabic and English words
+- Preparing multi-label targets for aspect detection
+- Building a separate dataset for aspect-level sentiment classification
+
+To prepare the data:
+
+```bash
+python src/prepare_data.py
+```
 
 ---
 
 ## Training
 
-Train aspect model:
+Train the aspect detection model:
 
 ```bash
 python src/train_aspect_model.py
 ```
 
-Train sentiment model:
+Train the sentiment classification model:
 
 ```bash
 python src/train_sentiment_model.py
+```
+
+The trained models are saved under:
+
+```text
+models/
 ```
 
 ---
 
 ## Prediction
 
-Run:
+Generate the final submission file:
 
 ```bash
 python src/predict.py
 ```
 
-Output:
+The output will be saved as:
 
 ```text
 outputs/predictions.json
 ```
+
+---
+
+## Streamlit Demo
+
+Run the local demo application:
+
+```bash
+streamlit run app/streamlit_app.py
+```
+
+---
+
+## Demo Examples
+
+The system can handle both multi-aspect reviews and ambiguous cases.
+
+### Example 1: Multi-aspect Review
+
+Input:
+
+```text
+الأكل كان وحش الخدمة بطيئة والسعر غالي
+```
+
+Output:
+
+- food → negative
+- service → negative
+- price → negative
+
+![Multi Aspect Demo](assets/demo-1.png)
+
+### Example 2: Ambiguous Review
+
+Input:
+
+```text
+مش عارف احكم بصراحة
+```
+
+Output:
+
+- general → positive
+
+![ABSA Demo](assets/absa-demo.png)
 
 ---
 
@@ -161,51 +225,27 @@ outputs/predictions.json
 ]
 ```
 
+Each record contains:
+
+- `review_id`
+- `aspects`
+- `aspect_sentiments`
+
 ---
 
 ## Installation
 
+Create and activate a virtual environment:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+Install dependencies:
+
 ```bash
 pip install -r requirements.txt
-python -m venv venv                                                                                
-venv\Scripts\activate        
-
 ```
-## streamlit 
-
-streamlit run app/streamlit_app.py
-
-```
-## Demo
-
-The system can handle simple and ambiguous reviews.
-
-Example:
-
-Input:
-"مش عارف احكم بصراحة"
-
-Output:
-- general → positive
-
-### Application Interface
-
-![ABSA Demo](assets/absa-demo.png)
 
 ---
-The system can handle both multi-aspect reviews and ambiguous cases.
-
-### Example 1: Multi-aspect review
-
-Input:
-"الأكل كان وحش  الخدمة بطيئة والسعر غالي"
-
-Output:
-- food → negative
-- service → negative  
-- price → negative  
-
-![Multi Aspect Demo](assets/demo-1.png)
-
----
-
