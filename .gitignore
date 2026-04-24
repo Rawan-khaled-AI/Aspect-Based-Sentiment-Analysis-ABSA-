@@ -1,71 +1,28 @@
-# ========================
 # Python
-# ========================
 __pycache__/
-*.py[cod]
-*.pyo
-*.pyd
+*.pyc
 
-# ========================
-# Virtual Environment
-# ========================
+# Environment
 venv/
-.env/
 .venv/
-
-# ========================
-# Environment Variables (Secrets)
-# ========================
 .env
-*.env
 
-# ========================
-# Jupyter Notebook
-# ========================
+# Notebooks
 .ipynb_checkpoints/
 
-# ========================
-# Logs
-# ========================
-*.log
+# Data / outputs
+data/raw/
+data/processed/
+outputs/*.json
 
-# ========================
-# OS Files
-# ========================
-.DS_Store
-Thumbs.db
-
-# ========================
-# VS Code
-# ========================
-.vscode/
-
-# ========================
-# PyTorch / Models
-# ========================
+# Models
+models/
 *.pt
 *.pth
-*.ckpt
+*.pkl
+*.joblib
 
-# ========================
-# Data Files (اختياري حسب مشروعك)
-# ========================
-data/
-datasets/
-*.csv
-*.json
-
-
-
-# ========================
-# Streamlit
-# ========================
-.streamlit/
-
-# ========================
-# Build / Dist
-# ========================
-build/
-dist/
-*.egg-info/
-
+# System / editor
+.DS_Store
+Thumbs.db
+.vscode/
